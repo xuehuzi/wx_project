@@ -1,0 +1,151 @@
+<view class="openpage">
+  <view class="openpage_header">
+    <view class="openpage_img_bg">
+      <image class="openpage_bg" src="../open_pages/img/bg.png" mode="widthFix"></image>
+    </view>
+    <view class="openpage_swiperb">
+      <view class="openpage_swiperb_item {{select_tab==0?'swiper_active':''}}" data-current="0" bindtap="click_tab">商品</view>
+      <view class="openpage_swiperb_item {{select_tab==1?'swiper_active':''}}" data-current="1" bindtap="click_tab">评价</view>
+      <view class="openpage_swiperb_item {{select_tab==2?'swiper_active':''}}" data-current="2" bindtap="click_tab">商户</view>
+    </view>
+  </view>
+  <swiper current="{{select_tab}}" duration="300" bindchange="swiper_tab" style="min-height:{{select_tab === 0 ? screen_height-top_height-bottom_height : screen_height-top_height}}px">
+    <swiper-item>
+      <scroll-view scroll-y="true" style="height: 100%;">
+        <view class="goods">
+          <view wx:for="{{get_data.goods}}" wx:key="id" class="goods_item">
+            <image src="{{item.goods_pic}}" class="goods_item_img"></image>
+            <view class="goods_item_content">
+              <view>{{item.goods_name}}</view>
+              <view>
+                <text>库存：{{item.numb}}</text>
+                <text class="price">价格：￥{{item.price}}</text>
+              </view>
+              <view>说明：{{item.title}}</view>
+              <view class="goods_item_numb">
+                <block wx:if="{{item.select_amount > 0}}">
+                  <image src="../open_pages/img/reduce.png" class="amount_img" bindtap="less_amount" data-index="{{index}}"></image>
+                  <text class="goods_item_amount">{{item.select_amount}}</text>
+                </block>
+                <image src="../open_pages/img/add.png" class="amount_img" bindtap="add_amount" data-index="{{index}}"></image>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>2</view>
+            <view>3333333</view>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <scroll-view scroll-y="true" style="height: 100%;">
+        <view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>2</view>
+          <view>3333</view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <scroll-view scroll-y="true" style="height: 100%;">
+        <view>
+          <view>商户</view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+  <view class="{{select_tab === 0 ? 'openpage_footer':'openpage_footer_active'}}">
+    <image class="shopping_icon" src="../open_pages/img/shopping.png"></image>
+    <view class="shopping_price">
+      <view wx:if="{{price > 0}}">
+        <text style="font-size:32rpx">￥</text>
+        <text style="font-size:48rpx">{{price}}</text>
+      </view>
+      <view style="font-size:22rpx;font-weight: lighter;padding: 4rpx 0;">邮费12</view>
+    </view>
+    <view class="shopping_submit">
+      <text>去结算</text>
+    </view>
+  </view>
+</view>

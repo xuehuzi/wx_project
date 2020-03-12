@@ -1,0 +1,24 @@
+/* pages/self_pages/self_pages.wxss */
+
+.self_header {
+  background: url(https://s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:9096d347/78890a8f1859bc10152151fc64aff5cc.png);
+  background-size: 100% 100%;
+  padding: 10% 0 5%;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  flex-direction:column;
+}
+
+.self_header_iconbg {
+  width: 80px;
+  height: 80px;
+  background: red;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.self_header_icon {
+  width: 80px;
+  height: 80px;
+}

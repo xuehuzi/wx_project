@@ -1,0 +1,5 @@
+<!--pages/login.wxml-->
+<view class="get_power">
+  <image src="../index/img/logo.png"></image>
+  <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 申请授权 </button>
+</view>

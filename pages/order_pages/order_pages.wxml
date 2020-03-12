@@ -1,0 +1,6 @@
+<view wx:if="{{info_flg && canIUse}}">
+  <login-component></login-component>
+</view>
+<view wx:else>
+  订单
+</view>

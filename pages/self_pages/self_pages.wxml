@@ -1,0 +1,12 @@
+<view>
+  <view class="self_header">
+    <view class="self_header_iconbg">
+      <open-data type="userAvatarUrl" class="self_header_icon"></open-data>
+    </view>
+    <view>
+      <open-data type="userNickName"></open-data>
+    </view>
+  </view>
+
+
+</view>

@@ -1,0 +1,48 @@
+<!--index.wxml-->
+<view wx:if="{{info_flg && canIUse}}" class="get_power">
+  <image src="../index/img/logo.png"></image>
+  <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">申请授权</button>
+</view>
+<view wx:else class="main">
+  <view class="position_body">
+    <view wx:if="{{location_flg}}">
+      <button open-type="getUserInfo" bindgetuserinfo="get_position" class="get_position_btn_1"></button>
+      <view class="get_position_btn_2">
+        <image src="../index/img/location_icon.png" class="position_icon"></image>
+        <text>点击获得您的地理位置</text>
+      </view>
+    </view>
+    <view wx:else class="show_position" bindtap="update_position">
+      <image src="../index/img/location_icon.png" class="position_icon"></image>
+      <text>{{address}}</text>
+    </view>
+  </view>
+  <view class="main_body">
+    <view class="main_body_list" wx:for="{{business_data}}" wx:key="id" bindtap="go_details" data-index="{{index}}">
+      <view class="main_body_icon">
+        <image src="{{item.attributes.icon}}"></image>
+      </view>
+      <view class="main_body_text">
+        <view>
+          <text class="text_title_describe">品牌</text>
+          <text class="text_title">{{item.attributes.name}}</text>
+        </view>
+        <view>
+          <text class="text_content">电话：{{item.attributes.tel}}</text>
+        </view>
+        <view>
+          <text class="text_content">地址：{{item.attributes.address}}</text>
+        </view>
+        <view>
+          <text class="text_content">公告：{{item.attributes.notice}}</text>
+        </view>
+        <view>
+          <text style="color:#fff100;">✿</text>
+          <text class="text_content"> {{5}}</text>
+          <text class="text_content"> | 月销售额￥{{5}}</text>
+        </view>
+      </view>
+    </view>
+    <view hidden="{{reach_bottom}}">加载更多</view>
+  </view>
+</view>
