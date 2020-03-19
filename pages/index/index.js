@@ -14,7 +14,8 @@ Page({
     address: '',
     sk: 'EP1AKG9zSy9U8hAufBJ87YS3AIEx9pnd',
     name_sk: 'AJIBZ-SMPL3-MFA3U-YOI5L-FAONQ-OIBE6',
-    reach_bottom: true
+    reach_bottom: true,
+    loading_text: '...'
   },
 
   onLoad: function() {
@@ -193,17 +194,34 @@ Page({
     )
   },
   onReachBottom: function() {
-    let test = ''
-    console.log('加载更多')
-    leancloud_storage.business_data.limit(5)
-    leancloud_storage.business_data.find().then(
-      function(todos) {
-        test = todos
-        console.log(test)
-      })
-    this.setData({
-      reach_bottom: false
+    let that = this
+    let data_length = 0
+    that.setData({
+      reach_bottom: false,
     })
-
+    leancloud_storage.business_data.limit(that.data.business_data.length + 1) //设置返回结果数量
+    leancloud_storage.business_data.count().then(function(count) { //获取data长度
+        data_length = count
+      })
+      .then(
+        () => {
+          if (that.data.business_data.length < data_length) { //判断是否已经将data加载完
+            that.setData({
+              loading_text: '加载更多',
+            })
+            leancloud_storage.business_data.find()
+              .then(
+                (todos) => {
+                  that.setData({
+                    business_data: todos,
+                  })
+                })
+          } else {
+            that.setData({
+              loading_text: '没有了',
+            })
+          }
+        }
+      )
   }
 })

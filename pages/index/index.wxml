@@ -43,6 +43,6 @@
         </view>
       </view>
     </view>
-    <view hidden="{{reach_bottom}}">加载更多</view>
+    <view hidden="{{reach_bottom}}" class="update_loading">{{loading_text}}</view>
   </view>
 </view>
