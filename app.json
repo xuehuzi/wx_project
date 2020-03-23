@@ -1,15 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/open_pages/open_pages",
     "pages/order_pages/order_pages",
-    "pages/self_pages/self_pages"
+    "pages/self_pages/self_pages",
+    "pages/self_pages/address/address"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "测试",
+    "navigationBarTitleText": "首页",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

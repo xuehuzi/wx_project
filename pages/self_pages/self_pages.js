@@ -1,13 +1,14 @@
 // pages/self_pages/self_pages.js
 let app = getApp()
+let leancloud_storage = require("../../utils/get_data.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    header_icon: null,
-    header_name: null
+    // header_icon: null,
+    // header_name: null
   },
 
   /**
@@ -18,11 +19,15 @@ Page({
     wx.setNavigationBarTitle({
       title: '我的'
     })
+    // that.setData({
+    //   header_icon: app.globalData.userInfo.attributes.avatarUrl,
+    //   header_name: app.globalData.userInfo.attributes.nickName
+    // })
+  },
 
-    console.log(app.globalData.userInfo.attributes.avatarUrl)
-    that.setData({
-      header_icon: app.globalData.userInfo.attributes.avatarUrl,
-      header_name: app.globalData.userInfo.attributes.nickName
+  edit_address: function() {
+    wx.navigateTo({
+      url: '../self_pages/address/address',
     })
   },
 

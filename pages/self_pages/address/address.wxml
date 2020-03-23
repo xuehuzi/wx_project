@@ -1,0 +1,60 @@
+<!--pages/self_pages/address/address.wxml-->
+<view class="adress_body">
+  <view class="address_list">
+    <view hidden="{{address_flg}}">你还没设置过地址</view>
+    <view hidden="{{!address_flg}}" wx:for="{{user_address}}" wx:key="id" class="address_content" bindtap="edit_address" data-index="{{index}}">
+      <view>
+        <text>{{item.address_name}}</text>
+        <text>{{item.address_telephone}}</text>
+      </view>
+      <view>{{item.province_city}} {{item.address_details}} </view>
+    </view>
+  </view>
+  <view class="address_btn">
+    <view class="add_address_1" bindtap="add_address">新增地址</view>
+    <view class="add_address_2" bindtap="add_wx_address">从微信授权地址</view>
+  </view>
+  <modal title="新增地址" hidden="{{modal_hidden}}" bindconfirm="confirm_modal" bindcancel="cancel_modal">
+    <view>
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+        <view>
+          省市：{{region}}
+        </view>
+      </picker>
+    </view>
+    <view class="modal_content">
+      地址：
+      <input id="address_details" maxlength="40" bindblur="get_input_value" value="{{address_details}}" />
+    </view>
+    <view class="modal_content">
+      电话：
+      <input id="address_telephone" type="number" bindblur="get_input_value" value="{{address_telephone}}" />
+    </view>
+    <view class="modal_content">
+      姓名：
+      <input id="address_name" maxlength="5" bindblur="get_input_value" value="{{address_name}}" />
+    </view>
+  </modal>
+  <!--  -->
+    <modal title="编辑地址" hidden="{{edit_modal_hidden}}" bindconfirm="edit_confirm_modal" bindcancel="edit_cancel_modal">
+    <view>
+      <picker mode="region" bindchange="edit_bindRegionChange" value="{{region}}">
+        <view>
+          省市：{{region}}
+        </view>
+      </picker>
+    </view>
+    <view class="modal_content">
+      地址：
+      <input id="edit_address_details" maxlength="40" bindblur="edit_input_value" value="{{edit_address_details}}" />
+    </view>
+    <view class="modal_content">
+      电话：
+      <input id="edit_address_telephone" type="number" bindblur="edit_input_value" value="{{edit_address_telephone}}" />
+    </view>
+    <view class="modal_content">
+      姓名：
+      <input id="edit_address_name" maxlength="5" bindblur="edit_input_value" value="{{edit_address_name}}" />
+    </view>
+  </modal>
+</view>

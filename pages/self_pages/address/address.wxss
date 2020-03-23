@@ -1,0 +1,64 @@
+/* pages/self_pages/address/address.wxss */
+
+.adress_body {
+  display: flex;
+  padding: 100rpx 20rpx;
+  justify-content: center;
+}
+
+.address_list {
+  width: 100%;
+}
+
+.address_content {
+  padding: 30rpx 0;
+  border-bottom: 1px solid #eee;
+}
+
+.address_content view:first-child {
+  margin-bottom: 15rpx;
+}
+
+.address_content view:first-child text:first-child {
+  margin-right: 100rpx;
+}
+
+.address_content view:last-child {
+  font-size: 24rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.address_btn {
+  position: fixed;
+  bottom: 0;
+  width: 90%;
+  text-align: center;
+}
+
+.add_address_1, .add_address_2 {
+  background: red;
+  padding: 20rpx 0;
+  border-radius: 10px;
+  margin-bottom: 50rpx;
+  color: white;
+}
+
+.modal_content {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid red;
+}
+
+.modal_content input {
+  width: 85%;
+  padding: 30rpx 0;
+}
+
+picker {
+  width: 100%;
+  padding: 30rpx 0;
+  border-bottom: 1px solid red;
+}
