@@ -144,7 +144,7 @@
       </view>
       <view style="font-size:22rpx;font-weight: lighter;padding: 4rpx 0;">邮费12</view>
     </view>
-    <view class="shopping_submit">
+    <view class="shopping_submit" bindtap="shopping_submit">
       <text>去结算</text>
     </view>
   </view>

@@ -93,6 +93,17 @@ Page({
     })
   },
 
+  shopping_submit:function(){
+    let orders = []
+    //console.log(this.data.get_data.goods)
+    this.data.get_data.goods.forEach((item)=>{
+      if(item.select_amount > 0){
+        orders.push(item)
+      }
+    })
+    console.log(orders)
+  },
+
   onHide: function() { //生命周期函数--监听页面隐藏
 
   },

@@ -2,10 +2,11 @@
 <view class="adress_body">
   <view class="address_list">
     <view hidden="{{address_flg}}">你还没设置过地址</view>
-    <view hidden="{{!address_flg}}" wx:for="{{user_address}}" wx:key="id" class="address_content" bindtap="edit_address" data-index="{{index}}">
+    <view hidden="{{!address_flg}}" wx:for="{{user_address}}" wx:key="id" class="address_content {{item.chose === true? 'chose_style':''}}" bindtap="edit_address" data-index="{{index}}">
       <view>
         <text>{{item.address_name}}</text>
         <text>{{item.address_telephone}}</text>
+        <text>编辑</text>
       </view>
       <view>{{item.province_city}} {{item.address_details}} </view>
     </view>
@@ -34,9 +35,16 @@
       姓名：
       <input id="address_name" maxlength="5" bindblur="get_input_value" value="{{address_name}}" />
     </view>
+    <view class="modal_content">
+      <checkbox-group bindchange="checkboxChange">
+        <label>
+          <checkbox value="{{chose_flg}}" checked="{{chose_flg}}">设为默认地址</checkbox>
+        </label>
+      </checkbox-group>
+    </view>
   </modal>
   <!--  -->
-    <modal title="编辑地址" hidden="{{edit_modal_hidden}}" bindconfirm="edit_confirm_modal" bindcancel="edit_cancel_modal">
+  <modal title="编辑地址" hidden="{{edit_modal_hidden}}" bindconfirm="edit_confirm_modal" bindcancel="edit_cancel_modal">
     <view>
       <picker mode="region" bindchange="edit_bindRegionChange" value="{{region}}">
         <view>
@@ -55,6 +63,13 @@
     <view class="modal_content">
       姓名：
       <input id="edit_address_name" maxlength="5" bindblur="edit_input_value" value="{{edit_address_name}}" />
+    </view>
+    <view class="modal_content">
+      <checkbox-group bindchange="checkboxChange">
+        <label>
+          <checkbox value="{{chose_flg}}" checked="{{edit_chose}}">设为默认地址</checkbox>
+        </label>
+      </checkbox-group>
     </view>
   </modal>
 </view>

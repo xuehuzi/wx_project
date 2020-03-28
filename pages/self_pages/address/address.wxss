@@ -2,7 +2,7 @@
 
 .adress_body {
   display: flex;
-  padding: 100rpx 20rpx;
+  padding: 100rpx 0;
   justify-content: center;
 }
 
@@ -11,16 +11,25 @@
 }
 
 .address_content {
-  padding: 30rpx 0;
+  padding: 30rpx 20rpx;
   border-bottom: 1px solid #eee;
+}
+
+.chose_style {
+  background: #ccc;
 }
 
 .address_content view:first-child {
   margin-bottom: 15rpx;
+  display: flex;
+  justify-content: space-between;
 }
 
 .address_content view:first-child text:first-child {
-  margin-right: 100rpx;
+  width: 115rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .address_content view:last-child {
@@ -54,6 +63,10 @@
 
 .modal_content input {
   width: 85%;
+  padding: 30rpx 0;
+}
+
+.modal_content:last-child checkbox-group {
   padding: 30rpx 0;
 }
 

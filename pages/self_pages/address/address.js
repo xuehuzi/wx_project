@@ -18,7 +18,9 @@ Page({
     edit_index: null,
     edit_address_details: '',
     edit_address_name: '',
-    edit_address_telephone: ''
+    edit_address_telephone: '',
+    edit_chose: null,
+    chose_flg: false,
   },
 
   /**
@@ -61,7 +63,12 @@ Page({
       })
     } else {
       this.setData({
-        modal_hidden: false
+        modal_hidden: false,
+        address_details: '',
+        address_name: '',
+        address_telephone: '',
+        chose_flg: false,
+        region: []
       })
     }
   },
@@ -71,55 +78,82 @@ Page({
     let temp_address = [] //临时保存当前添加的地址
     let _uesr_address = {} //临时保存当前添加的地址
     let user = leancloud_storage.AV.User.current()
-    wx.chooseAddress({
-      success(res) {
-        _uesr_address.province_city = res.provinceName + res.cityName + res.countyName
-        _uesr_address.address_details = res.detailInfo
-        _uesr_address.address_name = res.userName
-        _uesr_address.address_telephone = res.telNumber
-        temp_address.push(_uesr_address)
-        that.setData({
-          address_flg: true,
-          modal_hidden: true,
-          user_address: that.data.user_address.concat(temp_address),
-        })
-        user.set('address', that.data.user_address)
-        user.save()
-      }
-    })
+    if (user.attributes.address.length >= 6) {
+      wx.showToast({
+        title: '地址最多存6个',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      wx.chooseAddress({
+        success(res) {
+          _uesr_address.province_city = res.provinceName + res.cityName + res.countyName
+          _uesr_address.address_details = res.detailInfo
+          _uesr_address.address_name = res.userName
+          _uesr_address.address_telephone = res.telNumber
+          temp_address.push(_uesr_address)
+          that.setData({
+            address_flg: true,
+            modal_hidden: true,
+            user_address: that.data.user_address.concat(temp_address),
+          })
+          user.set('address', that.data.user_address)
+          user.save()
+        }
+      })
+    }
   },
 
   confirm_modal: function(e) { //模态确定
     let temp_address = [] //临时保存当前添加的地址
     let _uesr_address = {} //临时保存当前添加的地址
     let user = leancloud_storage.AV.User.current()
+    let temp_tips = 0
     if (this.data.address_details !== '' && this.data.address_name !== '' && this.data.address_telephone !== '') {
 
       _uesr_address.province_city = this.data.region.join("")
       _uesr_address.address_details = this.data.address_details
       _uesr_address.address_name = this.data.address_name
       _uesr_address.address_telephone = this.data.address_telephone
+      _uesr_address.chose = this.data.chose_flg
       temp_address.push(_uesr_address)
 
+      if (this.data.chose_flg) {
+        //新增chose为true，之前所有chose改为false
+        for (let i = 0; i < this.data.user_address.length; i++) {
+          let temp_key = 'user_address[' + i + '].chose'
+          this.setData({
+            [temp_key]: false
+          })
+        }
+      } else {
+        //新增chose为false，且之前所有chose也为false。提示设置默认地址
+        for (let i = 0; i < this.data.user_address.length; i++) {
+          if (this.data.user_address[i].chose === false) {
+            temp_tips++
+          }
+        }
+      }
+      if (temp_tips !== this.data.user_address.length) {
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success',
+          duration: 2000
+        })
+      } else {
+        wx.showToast({
+          title: '添加成功，请注意设置默认地址',
+          icon: 'none',
+          duration: 2000
+        })
+      }
       this.setData({
         address_flg: true,
         modal_hidden: true,
         user_address: this.data.user_address.concat(temp_address),
-        address_details: '',
-        address_name: '',
-        address_telephone: '',
-        region: []
       })
-
-      wx.showToast({
-        title: '地址添加成功',
-        icon: 'success',
-        duration: 2000
-      })
-
       user.set('address', this.data.user_address)
       user.save()
-
     } else {
       wx.showToast({
         title: '输入错误,地址不能为空',
@@ -132,10 +166,6 @@ Page({
   cancel_modal: function(e) { //模态取消
     this.setData({
       modal_hidden: true,
-      address_details: '',
-      address_name: '',
-      address_telephone: '',
-      region: []
     })
   },
 
@@ -201,7 +231,8 @@ Page({
       region: this.data.user_address[index].province_city,
       edit_address_details: this.data.user_address[index].address_details,
       edit_address_name: this.data.user_address[index].address_name,
-      edit_address_telephone: this.data.user_address[index].address_telephone
+      edit_address_telephone: this.data.user_address[index].address_telephone,
+      edit_chose: this.data.user_address[index].chose
     })
   },
 
@@ -211,26 +242,47 @@ Page({
     let name = 'user_address[' + this.data.edit_index + '].address_name'
     let telephone = 'user_address[' + this.data.edit_index + '].address_telephone'
     let details = 'user_address[' + this.data.edit_index + '].address_details'
+    let chose = 'user_address[' + this.data.edit_index + '].chose'
+    let temp_tips = 0
     if (this.data.edit_address_details !== '' && this.data.edit_address_name !== '' && this.data.edit_address_telephone !== '') {
+      if (this.data.chose_flg) {
+        //新增chose为true，之前所有chose改为false
+        for (let i = 0; i < this.data.user_address.length; i++) {
+          let temp_key = 'user_address[' + i + '].chose'
+          this.setData({
+            [temp_key]: false
+          })
+        }
+        wx.showToast({
+          title: '修改成功',
+          icon: 'success',
+          duration: 2000
+        })
+      } else {
+        //新增chose为false，且之前所有chose也为false。提示设置默认地址
+        for (let i = 0; i < this.data.user_address.length; i++) {
+          if (this.data.user_address[i].chose === false) {
+            temp_tips++
+          }
+        }
+        wx.showToast({
+          title: '修改成功，请注意设置默认地址',
+          icon: 'none',
+          duration: 2000
+        })
+      }
       this.setData({
         edit_modal_hidden: true,
         [province_city]: this.data.region,
         [name]: this.data.edit_address_name,
         [telephone]: this.data.edit_address_telephone,
         [details]: this.data.edit_address_details,
-        region: [],
-        edit_address_details: '',
-        edit_address_name: '',
-        edit_address_telephone: ''
-      })
-      wx.showToast({
-        title: '修改成功',
-        icon: 'success',
-        duration: 2000
+        [chose]: this.data.chose_flg
       })
       user.set('address', this.data.user_address)
       user.save()
-    }else{
+      console.log(this.data.user_address)
+    } else {
       wx.showToast({
         title: '输入错误,地址不能为空',
         icon: 'none',
@@ -242,10 +294,12 @@ Page({
   edit_cancel_modal: function() { //编辑取消
     this.setData({
       edit_modal_hidden: true,
-      region: [],
-      edit_address_details: '',
-      edit_address_name: '',
-      edit_address_telephone: ''
+    })
+  },
+
+  checkboxChange: function(e) { //默认地址选择
+    this.setData({
+      chose_flg: Boolean(e.detail.value[0])
     })
   },
   /**
