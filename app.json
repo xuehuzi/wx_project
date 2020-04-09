@@ -4,7 +4,8 @@
     "pages/open_pages/open_pages",
     "pages/order_pages/order_pages",
     "pages/self_pages/self_pages",
-    "pages/self_pages/address/address"
+    "pages/self_pages/address/address",
+    "pages/open_pages/confirm_order/confirm_order"
   ],
   "window": {
     "backgroundTextStyle": "dark",

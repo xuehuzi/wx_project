@@ -1,20 +1,30 @@
 // pages/open_pages/order_pages.js
 let leancloud_storage = require("../../utils/get_data.js")
-let app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    order_data: [],
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    info_flg: app.globalData.power_flg
+    get_orders: [],
+    show_flg: null,
+
+    select_index: null,
+
   },
 
   onLoad: function(options) {
     wx.setNavigationBarTitle({
       title: '订单'
+    })
+  },
+
+  click_order_lists: function(e) {
+    let index = e.currentTarget.dataset.index
+    let key = 'get_orders[' + index + '].hidden'
+    this.setData({
+      select_index: e.currentTarget.dataset.index,
+      [key]: !this.data.get_orders[index].hidden
     })
   },
 
@@ -30,14 +40,28 @@ Page({
    */
   onShow: function() {
     let that = this;
-    leancloud_storage.business_data.find().then(
+    let user = leancloud_storage.AV.User.current()
+    leancloud_storage.order_data.equalTo('order_obj.id', user.id);
+    leancloud_storage.order_data.find().then(
       function(todos) {
-        that.setData({
-          order_data: todos
-        })
-        console.log(that.data.order_data)
-        console.log(that.data.info_flg)
-        console.log(app.globalData.power_flg)
+        if (todos.length > 0) {
+          that.setData({
+            get_orders: todos[0].attributes.order_obj.lists,
+            show_flg: true
+          })
+          that.data.get_orders.forEach(function(item, index) {
+            //item.isset = false
+            let key = 'get_orders[' + index + '].hidden'
+            that.setData({
+              [key]: false
+            })
+          })
+          console.log(that.data.get_orders)
+        } else {
+          that.setData({
+            show_flg: false
+          })
+        }
       })
   },
 

@@ -1,6 +1,22 @@
-<view wx:if="{{info_flg && canIUse}}">
-  <login-component></login-component>
-</view>
-<view wx:else>
-  订单
+<view wx:if="{{!show_flg}}" style="text-align:center">你还没下过单</view>
+<view wx:else class="order_lists">
+  <view wx:for="{{get_orders}}" wx:key="id" bindtap="click_order_lists" data-index="{{index}}" class="order_lists_li">
+    <image class="order_lists_icon" src="{{item.icon}}"></image>
+    <view class="order_lists_content">
+      <text>{{item.name}}</text>
+      <text>{{item.time}}</text>
+    </view>
+    <view class="order_lists_price">￥{{item.price}}</view>
+    <view style="width:100%;text-align:center;">
+      <image style="width:15px;height:15px;" src="../order_pages/img/xiala.png"></image>
+    </view>
+    <view wx:for="{{item.orders}}" wx:for-item="orders" wx:key="id" class="order_son_lists" wx:if="{{item.hidden}}">
+      <view style="display:flex;align-items: center">
+        <image src="{{orders.goods_pic}}" style="height: 80rpx;width: 80rpx;"></image>
+        <text>{{orders.goods_name}}</text>
+      </view>
+      <text>x{{orders.select_amount}}</text>
+      <text style="width: 100rpx;">￥{{orders.price}}</text>
+    </view>
+  </view>
 </view>

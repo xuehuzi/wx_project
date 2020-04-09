@@ -1,0 +1,49 @@
+/* pages/open_pages/confirm_order.wxss */
+
+.order_lists {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.order_lists image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.order_lists_name {
+  margin-left: -180rpx;
+}
+
+.order_bottom {
+  position: fixed;
+  bottom: 0;
+  height: 100rpx;
+  width: 100vw;
+  background: #f8c74e;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 24px;
+}
+
+.order_price {
+  text-align: right;
+}
+
+.order_price text:last-child {
+  font-size: 32px;
+  color: rgb(255, 83, 57);
+}
+
+.show_address {
+  flex: 1;
+}
+
+.modify_address {
+  border-left: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  padding-left: 20rpx;
+}

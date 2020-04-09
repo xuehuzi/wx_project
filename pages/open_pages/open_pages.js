@@ -1,4 +1,5 @@
 // pages/open_pages.js
+let util = require('../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
@@ -10,7 +11,7 @@ Page({
     top_height: null,
     bottom_height: null,
     screen_height: null,
-    price:0,
+    price: 0,
   },
 
   onLoad: function(options) {
@@ -88,20 +89,43 @@ Page({
 
     wx.createSelectorQuery().select('.openpage_footer').boundingClientRect().exec(function(res) {
       that.setData({
-        bottom_height: res[0].height + 10//10是底栏图标凸出的距离
+        bottom_height: res[0].height + 10 //10是底栏图标凸出的距离
       })
     })
   },
 
-  shopping_submit:function(){
-    let orders = []
-    //console.log(this.data.get_data.goods)
-    this.data.get_data.goods.forEach((item)=>{
-      if(item.select_amount > 0){
-        orders.push(item)
-      }
-    })
-    console.log(orders)
+  shopping_submit: function() {
+    //店铺名
+    //商品名、商品价格、商品图标、商品数量
+    //总价
+    //收货地址（无默认地址情况处理）
+    //下单时间
+    //用户id
+    let order_obj = {}
+    order_obj.time  = util.formatTime(new Date())
+    order_obj.orders = []
+    order_obj.name = this.data.get_data.name
+    order_obj.price = this.data.price
+    order_obj.icon = this.data.get_data.icon
+    if (this.data.price > 0) {
+      this.data.get_data.goods.forEach((item) => { //处理已经添加的商品
+        if (item.select_amount > 0) {
+          order_obj.orders.push(item)
+        }
+      })
+      console.log(order_obj)
+      order_obj = JSON.stringify(order_obj)
+      
+      wx.navigateTo({
+        url: '../open_pages/confirm_order/confirm_order?order_obj=' + order_obj,
+      })
+    } else {
+      wx.showToast({
+        title: '不够配送金额',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
 
   onHide: function() { //生命周期函数--监听页面隐藏

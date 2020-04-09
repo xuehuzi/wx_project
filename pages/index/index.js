@@ -84,6 +84,14 @@ Page({
       () => {
         wx.hideLoading()
       }
+    ).catch(
+      () => {
+        wx.showToast({
+          title: '拉取数据失败，请检查网络或关闭小程序再进',
+          icon: 'none',
+          duration: 5000
+        })
+      }
     )
   },
 
@@ -189,7 +197,11 @@ Page({
       }
     ).catch(
       () => {
-        console.log('刷新异常')
+        wx.showToast({
+          title: '拉取数据失败，请检查网络或下拉刷新尝试',
+          icon: 'none',
+          duration: 5000
+        })
       }
     )
   },
