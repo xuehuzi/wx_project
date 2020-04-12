@@ -36,6 +36,7 @@ App({
   globalData: {
     userInfo: null,
     power_flg: false,
+    order_state:false
   }
 })
 

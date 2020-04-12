@@ -56,7 +56,7 @@ Page({
               [key]: false
             })
           })
-          console.log(that.data.get_orders)
+          //console.log(that.data.get_orders)
         } else {
           that.setData({
             show_flg: false

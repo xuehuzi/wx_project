@@ -1,5 +1,5 @@
 <!--pages/open_pages/confirm_order.wxml-->
-<view>
+<view hidden="{{order_state}}">
   <view style="padding: 50rpx 50rpx 0 50rpx;display:flex;">
     <view wx:if="{{!show_address}}" class="show_address">
       还没设置默认地址。
@@ -24,4 +24,19 @@
     </view>
   </view>
   <view bindtap="submit_orders" class="order_bottom">提交订单</view>
+</view>
+<view hidden="{{!order_state}}" style="padding: 0 30rpx;">
+  <view style="font-size:23px;text-align:center;">订单详情</view>
+  <view style="margin:50rpx 0;font-size:23px;">店铺名称：{{order_obj.name}}</view>
+  <view wx:for="{{order_obj.orders}}" wx:key="id" class="order_lists">
+    <image src="{{item.goods_pic}}"></image>
+    <text class="order_lists_name">{{item.goods_name}}</text>
+    <text style="color: #666;">x{{item.numb}}</text>
+    <text style="font-weight:600;">￥{{item.price}}</text>
+  </view>
+  <view>配送地址：{{address.province_city}},{{address.address_details}},{{address.address_telephone}},{{address.address_name}}</view>
+  <view class="order_price">
+    <text>订单金额：￥</text>
+    <text>{{order_obj.price}}</text>
+  </view>
 </view>

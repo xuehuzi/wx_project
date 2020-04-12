@@ -1,5 +1,6 @@
 // pages/open_pages/confirm_order.js
 let leancloud_storage = require("../../../utils/get_data.js")
+let app = getApp()
 Page({
 
   /**
@@ -8,7 +9,8 @@ Page({
   data: {
     order_obj: null,
     address: null,
-    show_address: null
+    show_address: null,
+    order_state: false
   },
 
   chose_address: function() {
@@ -24,6 +26,9 @@ Page({
     let that = this
     let user = leancloud_storage.AV.User.current()
     let order_obj = JSON.parse(options.order_obj)
+    wx.setNavigationBarTitle({
+      title: '订单详情'
+    })
     for (let i = 0; i < user.attributes.address.length; i++) {
       if (user.attributes.address[i].chose) {
         that.setData({
@@ -44,7 +49,7 @@ Page({
 
   submit_orders: function() {
     let that = this
-    if (!that.data.show_address) {//是否选了配送地址
+    if (!that.data.show_address) { //是否选了配送地址
       wx.showToast({
         title: '请选择一个配送地址',
         icon: 'none',
@@ -81,6 +86,18 @@ Page({
               order_obj: order_obj
             })
           }
+        }
+      ).then(
+        () => {
+          that.setData({
+            order_state: true
+          })
+          app.globalData.order_state = true
+          wx.showToast({
+            title: '订单提交成功',
+            icon: 'none',
+            duration: 2000
+          })
         }
       )
     }

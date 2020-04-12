@@ -1,5 +1,6 @@
 // pages/open_pages.js
 let util = require('../../utils/util.js')
+let app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -92,6 +93,13 @@ Page({
         bottom_height: res[0].height + 10 //10是底栏图标凸出的距离
       })
     })
+
+    if (app.globalData.order_state) {
+      that.setData({
+        price: 0
+      })
+    }
+    console.log(app.globalData)
   },
 
   shopping_submit: function() {
@@ -102,7 +110,7 @@ Page({
     //下单时间
     //用户id
     let order_obj = {}
-    order_obj.time  = util.formatTime(new Date())
+    order_obj.time = util.formatTime(new Date())
     order_obj.orders = []
     order_obj.name = this.data.get_data.name
     order_obj.price = this.data.price
@@ -113,15 +121,14 @@ Page({
           order_obj.orders.push(item)
         }
       })
-      console.log(order_obj)
       order_obj = JSON.stringify(order_obj)
-      
+
       wx.navigateTo({
         url: '../open_pages/confirm_order/confirm_order?order_obj=' + order_obj,
       })
     } else {
       wx.showToast({
-        title: '不够配送金额',
+        title: '还没选择商品',
         icon: 'none',
         duration: 2000
       })
