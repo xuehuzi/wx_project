@@ -98,8 +98,14 @@ Page({
       that.setData({
         price: 0
       })
+      for (let i = 0; i < that.data.get_data.goods.length;i++){
+        let key = 'get_data.goods[' + i + '].select_amount'
+        that.setData({
+          [key]: 0,
+        })
+      }
+      app.globalData.order_state = false
     }
-    console.log(app.globalData)
   },
 
   shopping_submit: function() {

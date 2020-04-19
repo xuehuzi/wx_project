@@ -10,12 +10,11 @@ Page({
     user_info: {}, //用户数据
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     info_flg: app.globalData.power_flg,
-    location_flg: false,
-    address: '',
+    address: '点击获得您的地理位置',
     sk: 'EP1AKG9zSy9U8hAufBJ87YS3AIEx9pnd',
     name_sk: 'AJIBZ-SMPL3-MFA3U-YOI5L-FAONQ-OIBE6',
     reach_bottom: true,
-    loading_text: '...'
+    loading_text: '...',
   },
 
   onLoad: function() {
@@ -47,7 +46,7 @@ Page({
           })
         } else {
           that.setData({
-            location_flg: true
+            location_flg: true,
           })
         }
       }
@@ -117,35 +116,56 @@ Page({
     }
   },
 
-  get_position: function() { //点击位置授权
+  get_position: function() {
     let that = this
-    wx.getLocation({
-      type: 'gcj02',
+    wx.getSetting({
       success(res) {
-        that.get_address(res.latitude, res.longitude)
-        that.setData({
-          location_flg: false
-        })
-      }
-    })
-  },
-
-  update_position: function() { //点击更新位置信息
-    let that = this
-    wx.showModal({
-      title: '更新位置信息',
-      content: '点击确定即可更新位置信息',
-      success(res) {
-        if (res.confirm) {
-          //console.log('确定')
+        if (res.authSetting['scope.userLocation'] === undefined) {
+          //第一次唤起位置授权（非授权拒绝，从没点过授权）
           wx.getLocation({
             type: 'gcj02',
             success(res) {
               that.get_address(res.latitude, res.longitude)
+            },
+            fail() {
+              wx.showToast({
+                title: '你拒绝了位置授权,部分功能将不能使用',
+                icon: 'none',
+                duration: 2000
+              })
             }
           })
-        } else if (res.cancel) {
-          console.log('取消')
+        } else if (res.authSetting['scope.userLocation']) {
+          //已经授权，点击更新地址
+          wx.showModal({
+            title: '更新位置信息',
+            content: '点击确定即可更新位置信息',
+            success(res) {
+              if (res.confirm) {
+                wx.getLocation({
+                  type: 'gcj02',
+                  success(res) {
+                    that.get_address(res.latitude, res.longitude)
+                  }
+                })
+              }
+            }
+          })
+        } else {
+          //授权后取消了，唤起的设置界面
+          wx.openSetting({
+            success(res) {
+              if (res.authSetting['scope.userLocation']) {
+                wx.showToast({
+                  title: '授权成功！',
+                })
+              } else {
+                wx.showToast({
+                  title: '授权失败！',
+                })
+              }
+            }
+          })
         }
       }
     })
@@ -162,7 +182,7 @@ Page({
     })
   },
 
-  get_address(lat, lon) {
+  get_address(lat, lon) { //位置经纬度解析
     let that = this
     let SIG = md5("/ws/geocoder/v1?key=" + that.data.name_sk + "&location=" + String(lat) + "," + String(lon) + that.data.sk)
     //md5解密数据
@@ -235,5 +255,36 @@ Page({
           }
         }
       )
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
+    return {
+      title: '自定义转发标题button',
+      path: '/pages/index/index',
+      imageUrl: '../self_pages/img/share.jpg'
+    }
+  },
+
+  onShow() {
+    let that = this
+    wx.getSetting({ //检测位置授权状态
+      success(res) {
+        if (res.authSetting['scope.userLocation']) {
+          wx.getLocation({
+            type: 'gcj02',
+            success(res) {
+              that.get_address(res.latitude, res.longitude)
+            }
+          })
+        } else {
+          that.setData({
+            address: '点击获得您的地理位置'
+          })
+        }
+      }
+    })
   }
 })

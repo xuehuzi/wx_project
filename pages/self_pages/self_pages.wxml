@@ -13,5 +13,24 @@
       <text>></text>
     </view>
   </view>
-
+  <view class="self_content">
+    <button open-type="share" style=" width: 100%;"></button>
+    <view class="self_address">
+      <text>转发测试</text>
+      <text>></text>
+    </view>
+  </view>
+  <view class="self_content">
+    <button open-type="openSetting" style=" width: 100%;"></button>
+    <view class="self_address">
+      <text>查看授权</text>
+      <text>></text>
+    </view>
+  </view>
+  <view class="self_content" bindtap="save_img">
+    <view class="self_address">
+      <text>保存图片测试</text>
+      <text>></text>
+    </view>
+  </view>
 </view>

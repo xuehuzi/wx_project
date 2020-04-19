@@ -21,21 +21,10 @@
   position: fixed;
   background: white;
   padding: 10rpx 20rpx;
-}
-
-.get_position_btn_1 {
-  opacity: 0;
-  width: 100vw;
-  height: 50rpx;
-  position: fixed;
-}
-
-.get_position_btn_2, .show_position {
+  width: 100%;
+  font-size: 24rpx;
   display: flex;
   align-items: center;
-  font-size: 24rpx;
-  font-weight: 400;
-  width: 100vw;
 }
 
 .position_icon {

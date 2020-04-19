@@ -99,6 +99,15 @@ Page({
             duration: 2000
           })
         }
+      ).catch(
+        ()=>{
+          wx.showToast({
+            title: '订单提交失败',
+            icon: 'none',
+            duration: 2000
+          })
+          
+        }
       )
     }
   },

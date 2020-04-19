@@ -4,18 +4,9 @@
   <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">申请授权</button>
 </view>
 <view wx:else class="main">
-  <view class="position_body">
-    <view wx:if="{{location_flg}}">
-      <button open-type="getUserInfo" bindgetuserinfo="get_position" class="get_position_btn_1"></button>
-      <view class="get_position_btn_2">
-        <image src="../index/img/location_icon.png" class="position_icon"></image>
-        <text>点击获得您的地理位置</text>
-      </view>
-    </view>
-    <view wx:else class="show_position" bindtap="update_position">
-      <image src="../index/img/location_icon.png" class="position_icon"></image>
-      <text>{{address}}</text>
-    </view>
+  <view class="position_body" bindtap="get_position">
+    <image src="../index/img/location_icon.png" class="position_icon"></image>
+    <text>{{address}}</text>
   </view>
   <view class="main_body">
     <view class="main_body_list" wx:for="{{business_data}}" wx:key="id" bindtap="go_details" data-index="{{index}}">
