@@ -8,9 +8,8 @@ Page({
   data: {
     get_orders: [],
     show_flg: null,
-
     select_index: null,
-
+    father_index: null
   },
 
   onLoad: function(options) {
@@ -24,7 +23,16 @@ Page({
     let key = 'get_orders[' + index + '].hidden'
     this.setData({
       select_index: e.currentTarget.dataset.index,
-      [key]: !this.data.get_orders[index].hidden
+      [key]: !this.data.get_orders[index].hidden,
+      father_index:index
+    })
+  },
+
+  image_err: function(e) {
+    let son_index = e.currentTarget.dataset.son_index
+    let key = 'get_orders[' + this.data.father_index + '].orders[' + son_index + '].goods_pic'
+    this.setData({
+      [key]: '../order_pages/img/err_img.jpg'
     })
   },
 

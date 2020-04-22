@@ -24,16 +24,16 @@
 }
 
 .order_lists_content text:first-child {
-  font-size: 20px;
+  font-size: 35rpx;
 }
 
 .order_lists_content text:last-child {
-  font-size: 13px;
+  font-size: 25rpx;
   color: #666;
 }
 
 .order_lists_price {
-  font-size: 20px;
+  font-size: 35rpx;
   width: 150rpx;
 }
 

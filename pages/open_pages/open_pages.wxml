@@ -14,7 +14,7 @@
       <scroll-view scroll-y="true" style="height: 100%;">
         <view class="goods">
           <view wx:for="{{get_data.goods}}" wx:key="id" class="goods_item">
-            <image src="{{item.goods_pic}}" class="goods_item_img"></image>
+            <image src="{{item.goods_pic}}" binderror="image_err" data-image_index='{{index}}' class="goods_item_img"></image>
             <view class="goods_item_content">
               <view>{{item.goods_name}}</view>
               <view>

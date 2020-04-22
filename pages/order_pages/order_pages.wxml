@@ -12,11 +12,11 @@
     </view>
     <view wx:for="{{item.orders}}" wx:for-item="orders" wx:key="id" class="order_son_lists" wx:if="{{item.hidden}}">
       <view style="display:flex;align-items: center">
-        <image src="{{orders.goods_pic}}" style="height: 80rpx;width: 80rpx;"></image>
-        <text>{{orders.goods_name}}</text>
+        <image src="{{orders.goods_pic}}" style="height: 80rpx;width: 80rpx;" binderror="image_err" data-son_index='{{index}}'></image>
+        <text style="font-size: 30rpx;padding-left: 20rpx;">{{orders.goods_name}}</text>
       </view>
-      <text>x{{orders.select_amount}}</text>
-      <text style="width: 100rpx;">￥{{orders.price}}</text>
+      <text style="font-size: 30rpx;">x{{orders.select_amount}}</text>
+      <text style="width: 100rpx;font-size: 30rpx;">￥{{orders.price}}</text>
     </view>
   </view>
 </view>

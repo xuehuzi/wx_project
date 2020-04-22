@@ -98,7 +98,7 @@ Page({
       that.setData({
         price: 0
       })
-      for (let i = 0; i < that.data.get_data.goods.length;i++){
+      for (let i = 0; i < that.data.get_data.goods.length; i++) {
         let key = 'get_data.goods[' + i + '].select_amount'
         that.setData({
           [key]: 0,
@@ -107,7 +107,13 @@ Page({
       app.globalData.order_state = false
     }
   },
-
+  image_err: function(e) {
+    let image_index = e.target.dataset.image_index
+    let key = 'get_data.goods[' + image_index + '].goods_pic'
+    this.setData({
+      [key]: '../open_pages/img/err_img.jpg'
+    })
+  },
   shopping_submit: function() {
     //店铺名
     //商品名、商品价格、商品图标、商品数量
